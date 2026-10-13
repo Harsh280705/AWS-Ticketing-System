@@ -1,0 +1,5 @@
+{
+    "status":  "200",
+    "target":  "/index.html",
+    "source":  "\u003c/^[^.]+$|\\.(?!(css|gif|ico|jpg|jpeg|js|png|txt|svg|woff|woff2|ttf|map|json|webp)$)([^.]+$)/\u003e"
+}

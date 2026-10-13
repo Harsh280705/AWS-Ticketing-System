@@ -1,0 +1,14 @@
+[
+  {
+    "AllowedHeaders": ["content-type"],
+    "AllowedMethods": ["PUT"],
+    "AllowedOrigins": ["http://localhost:5173"],
+    "MaxAgeSeconds": 300
+  },
+  {
+    "AllowedHeaders": ["authorization"],
+    "AllowedMethods": ["GET"],
+    "AllowedOrigins": ["http://localhost:5173"],
+    "MaxAgeSeconds": 300
+  }
+]

@@ -1,0 +1,80 @@
+# Dependencies
+**/node_modules/
+
+# Build outputs and generated deployment bundles
+/frontend/dist/
+/frontend/dist-ssr/
+/backend/dist/
+*.zip
+*.tsbuildinfo
+vite.config.*.timestamp-*
+
+# Local environment files / credentials (commit .env.example only)
+frontend/.env.local
+frontend/.env.production.local
+backend/.env
+backend/.env.local
+backend/.env.*.local
+
+# Local uploads: keep directory placeholder only
+backend/data/uploads/*
+!backend/data/uploads/.gitkeep
+
+# Logs, caches, coverage, temporary files
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+coverage/
+.nyc_output/
+*.tmp
+*.temp
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/*
+!.vscode/extensions.json
+**/.vscode/*
+!**/.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Local rollback copies, patch kits, and one-off diagnostics
+.supportly-*/
+patch-backups/
+AWS-Terminal-Reset-Patch/
+AWS-Ticketing-Modern-Login-Patch/
+*.before-*
+*.local-backup.*
+backend/package.local-backup.json
+backend/server.local-backup.js
+*-smoke-response.json
+*-smoke-event.json
+lambda-test-response.json
+tkt-*-real-user-event.json
+tkt-*-real-user-response.json
+tkt-runtime-access.*.json
+lambda-environment.repair.json
+lambda-environment.reset-fix.json
+api-cors.json
+s3-cors-cli.json
+
+# Environment-specific authorizer metadata; keep out until IDs are parameterized
+jwt-authorizer.json
+
+# Keep source templates and deployment manifests tracked:
+# frontend/.env.example
+# backend/deploy/*.json
+# api-cors-production.json
+# s3-cors-production.json
+# lambda-environment.json
+# tkt-runtime-policy.json

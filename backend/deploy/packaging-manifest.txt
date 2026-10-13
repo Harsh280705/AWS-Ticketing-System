@@ -1,0 +1,20 @@
+Deployment artifact manifest — built locally 2026-10-12 (rebuilt for create-time
+attachment keys + presigned download urls), NOT uploaded anywhere.
+
+Artifact: backend/dist/ticketing-handlers.zip (4.8 MB)
+SHA256: 0243253E6A9C90BDA721FEAAC23124BE5CEBD2E45D833E549990C098492AB34B
+Built with: node v22.18.0, npm-packaged deps (14.2 MB node_modules included for reproducibility)
+Contents: src/handlers/ (7 tkt-* files, each exports `handler` + `buildHandler`,
+  wired to ticketsSingleTable.js, env TICKETS_TABLE=tkt-tickets),
+  src/lib/{auth,response,tickets,ticketsSingleTable,uploads,validation}.js,
+  package.json, node_modules/.
+Deliberately excluded: server.js, aws-server.js, lambda.js, src/lib/mockUsers.js
+  (mock auth must never reach Lambda), services/, data/, tests/, scripts/,
+  backups, .env files.
+Verification: `tar -tf` listed all 7 handlers + 6 libs, zero mock/server/data hits;
+  each handler entry point loads standalone (`handler` + `buildHandler` functions);
+  handler logic covered by backend tests/handlers.test.js (single-table fake, green);
+  single-table lib covered by tests/single-table.test.js (6/6).
+Usage: one zip deploys all 7 functions; only the Handler string differs per function
+  (see backend/deploy/functions.json). Requires Stage 3 `tkt-tickets` approval
+  before any deploy; any rewire/rebuild changes the hash above.

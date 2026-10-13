@@ -1,0 +1,31 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "start:aws": "node -e \"process.env.TICKETS_TABLE=process.env.TICKETS_TABLE||'Tickets';require('./aws-server').listen(process.env.PORT||3001,()=>console.log('aws-server listening'))\"",
+    "dev": "nodemon server.js",
+    "test": "node --test tests/validation.test.js tests/auth.test.js tests/uploads.test.js tests/mock-auth.test.js tests/http-auth.test.js tests/handlers.test.js tests/local-server.test.js tests/single-table.test.js",
+    "reset:demo": "node scripts/reset-local-data.js",
+    "smoke": "node scripts/smoke-local.js",
+    "verify:live": "node scripts/verify-live.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.1149.0",
+    "@aws-sdk/client-s3": "^3.1149.0",
+    "@aws-sdk/lib-dynamodb": "^3.1149.0",
+    "@aws-sdk/s3-request-presigner": "^3.1149.0",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.7",
+    "express": "^5.3.0",
+    "serverless-http": "^4.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

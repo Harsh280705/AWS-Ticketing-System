@@ -1,0 +1,26 @@
+{
+    "requestContext":  {
+                           "authorizer":  {
+                                              "jwt":  {
+                                                          "claims":  {
+                                                                         "email":  "reset-fix@example.com",
+                                                                         "sub":  "reset-fix-agent",
+                                                                         "cognito:groups":  "[\"Agent\"]"
+                                                                     }
+                                                      }
+                                          },
+                           "http":  {
+                                        "method":  "GET",
+                                        "path":  "/tickets"
+                                    }
+                       },
+    "version":  "2.0",
+    "queryStringParameters":  {
+
+                              },
+    "rawPath":  "/tickets",
+    "routeKey":  "GET /tickets",
+    "headers":  {
+
+                }
+}

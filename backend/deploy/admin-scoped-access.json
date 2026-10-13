@@ -1,0 +1,142 @@
+{
+  "comment": "PROPOSAL FOR ADMINISTRATOR REVIEW ONLY — not attached anywhere. Least-privilege deployment permissions for the ticketing project in ap-southeast-2 (reviewed 2026-10-12 against the Service Authorization Reference; see permission-matrix.md). Covers Stage 2-6 creates + verification reads + fix cycles. Excludes deletes, org/billing, compute/networking, tagging. Unavoidable broad entries are flagged inline.",
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "CognitoCreate",
+      "Effect": "Allow",
+      "Action": ["cognito-idp:CreateUserPool"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "CognitoPoolScoped",
+      "Effect": "Allow",
+      "Action": [
+        "cognito-idp:CreateUserPoolClient",
+        "cognito-idp:CreateUserPoolDomain",
+        "cognito-idp:UpdateUserPool",
+        "cognito-idp:UpdateUserPoolClient",
+        "cognito-idp:DescribeUserPool",
+        "cognito-idp:DescribeUserPoolClient",
+        "cognito-idp:DescribeUserPoolDomain",
+        "cognito-idp:ListUserPoolClients",
+        "cognito-idp:ListGroups",
+        "cognito-idp:CreateGroup",
+        "cognito-idp:AdminCreateUser",
+        "cognito-idp:AdminSetUserPassword",
+        "cognito-idp:AdminConfirmSignUp",
+        "cognito-idp:AdminAddUserToGroup",
+        "cognito-idp:AdminGetUser"
+      ],
+      "Resource": ["arn:aws:cognito-idp:ap-southeast-2:517374107239:userpool/*"]
+    },
+    {
+      "Sid": "CognitoListPools",
+      "Effect": "Allow",
+      "Action": ["cognito-idp:ListUserPools"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "DynamoDeploy",
+      "Effect": "Allow",
+      "Action": ["dynamodb:CreateTable", "dynamodb:DescribeTable"],
+      "Resource": [
+        "arn:aws:dynamodb:ap-southeast-2:517374107239:table/tkt-tickets",
+        "arn:aws:dynamodb:ap-southeast-2:517374107239:table/Tickets",
+        "arn:aws:dynamodb:ap-southeast-2:517374107239:table/TicketComments"
+      ]
+    },
+    {
+      "Sid": "DynamoListTables",
+      "Effect": "Allow",
+      "Action": ["dynamodb:ListTables"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "S3Deploy",
+      "Effect": "Allow",
+      "Action": [
+        "s3:CreateBucket",
+        "s3:HeadBucket",
+        "s3:GetBucketPublicAccessBlock",
+        "s3:PutBucketPublicAccessBlock",
+        "s3:GetBucketCors",
+        "s3:PutBucketCors",
+        "s3:ListBucket"
+      ],
+      "Resource": ["arn:aws:s3:::ticketing-attachments-*"]
+    },
+    {
+      "Sid": "LambdaDeploy",
+      "Effect": "Allow",
+      "Action": [
+        "lambda:CreateFunction",
+        "lambda:GetFunction",
+        "lambda:GetFunctionConfiguration",
+        "lambda:GetPolicy",
+        "lambda:UpdateFunctionCode",
+        "lambda:UpdateFunctionConfiguration",
+        "lambda:AddPermission",
+        "lambda:InvokeFunction"
+      ],
+      "Resource": ["arn:aws:lambda:ap-southeast-2:517374107239:function:tkt-*"]
+    },
+    {
+      "Sid": "LambdaListFunctions",
+      "Effect": "Allow",
+      "Action": ["lambda:ListFunctions"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "ApiGwDeploy",
+      "Effect": "Allow",
+      "Action": [
+        "apigatewayv2:CreateApi",
+        "apigatewayv2:CreateAuthorizer",
+        "apigatewayv2:CreateRoute",
+        "apigatewayv2:CreateIntegration",
+        "apigatewayv2:CreateStage",
+        "apigatewayv2:CreateDeployment",
+        "apigatewayv2:UpdateRoute",
+        "apigatewayv2:UpdateIntegration",
+        "apigatewayv2:UpdateAuthorizer",
+        "apigatewayv2:UpdateStage",
+        "apigatewayv2:GetApis",
+        "apigatewayv2:GetAuthorizers",
+        "apigatewayv2:GetRoutes",
+        "apigatewayv2:GetIntegrations",
+        "apigatewayv2:GetStages",
+        "apigatewayv2:GetDeployments"
+      ],
+      "Resource": [
+        "arn:aws:apigateway:ap-southeast-2::/apis",
+        "arn:aws:apigateway:ap-southeast-2::/apis/*"
+      ]
+    },
+    {
+      "Sid": "ExecutionRoleManage",
+      "Effect": "Allow",
+      "Action": ["iam:CreateRole", "iam:PutRolePolicy", "iam:GetRole", "iam:GetRolePolicy", "iam:ListRolePolicies"],
+      "Resource": ["arn:aws:iam::517374107239:role/tkt-lambda-execution-role"]
+    },
+    {
+      "Sid": "ExecutionRolePass",
+      "Effect": "Allow",
+      "Action": ["iam:PassRole"],
+      "Resource": ["arn:aws:iam::517374107239:role/tkt-lambda-execution-role"],
+      "Condition": { "StringEquals": { "iam:PassedToService": "lambda.amazonaws.com" } }
+    },
+    {
+      "Sid": "LogsRead",
+      "Effect": "Allow",
+      "Action": ["logs:FilterLogEvents"],
+      "Resource": ["arn:aws:logs:ap-southeast-2:517374107239:log-group:/aws/lambda/tkt-*"]
+    },
+    {
+      "Sid": "LogsListGroups",
+      "Effect": "Allow",
+      "Action": ["logs:DescribeLogGroups"],
+      "Resource": "*"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "comment": "Exact spec for the approved new email-based pool. PREPARATION ONLY — nothing created (CreateUserPool still SCP-denied for the CLI session). No IDs invented: Pool ID, Client ID, and domain prefix are filled at creation time. No secrets anywhere (SPA client has no secret; user passwords are set interactively by the owner, never stored).",
+  "region": "ap-southeast-2",
+  "pool": {
+    "PoolName": "ticketing-pool",
+    "UsernameAttributes": ["email"],
+    "AutoVerifiedAttributes": ["email"],
+    "AdminCreateUserConfig": { "AllowAdminCreateUserOnly": false },
+    "EmailConfiguration": { "EmailSendingAccount": "COGNITO_DEFAULT" },
+    "AccountRecoverySetting": { "RecoveryMechanisms": [{ "Priority": 1, "Name": "verified_email" }] },
+    "MfaConfiguration": "OFF",
+    "UserPoolTier": "ESSENTIALS",
+    "Policies": {
+      "PasswordPolicy": {
+        "MinimumLength": 8,
+        "RequireUppercase": true,
+        "RequireLowercase": true,
+        "RequireNumbers": true,
+        "RequireSymbols": true,
+        "TemporaryPasswordValidityDays": 7
+      }
+    },
+    "VerificationMessageTemplate": {
+      "DefaultEmailOption": "CONFIRM_WITH_CODE",
+      "EmailSubject": "Verify your ticketing account",
+      "EmailMessage": "Your verification code is {####}."
+    }
+  },
+  "client": {
+    "ClientName": "ticketing-spa",
+    "GenerateSecret": false,
+    "AllowedOAuthFlowsUserPasswordAuth": false,
+    "AllowedOAuthFlows": ["code"],
+    "AllowedOAuthScopes": ["openid", "email", "profile"],
+    "SupportedIdentityProviders": ["COGNITO"],
+    "CallbackURLs": ["http://localhost:5173/callback"],
+    "LogoutURLs": ["http://localhost:5173/"],
+    "ExplicitAuthFlows": ["ALLOW_REFRESH_TOKEN_AUTH"],
+    "PreventUserExistenceErrors": "ENABLED",
+    "AccessTokenValidity": 60,
+    "IdTokenValidity": 60,
+    "RefreshTokenValidity": 30,
+    "TokenValidityUnits": { "AccessToken": "minutes", "IdToken": "minutes", "RefreshToken": "days" }
+  },
+  "domain": {
+    "type": "Cognito prefix domain (never custom domain)",
+    "pattern": "<unique-prefix>.auth.ap-southeast-2.amazoncognito.com",
+    "note": "Prefix must be globally unique; chosen interactively at creation (no probing)."
+  },
+  "groups": [
+    { "GroupName": "Customer", "Description": "Default role: own tickets only. No IAM role attached." },
+    { "GroupName": "Agent", "Description": "Support agents: all tickets + status/assignee updates. No IAM role attached." }
+  ],
+  "testUsers": [
+    { "sub": "customer-a", "group": "Customer" },
+    { "sub": "customer-b", "group": "Customer" },
+    { "sub": "agent-1", "group": "Agent", "note": "Must sign in again after group assignment so the cognito:groups claim is issued." }
+  ],
+  "explicitlyExcluded": [
+    "Plus tier and AdvancedSecurityMode",
+    "SMS MFA and phone-number requirements",
+    "Custom SES/SMS senders",
+    "Social, SAML, and OIDC federation",
+    "Machine-to-machine (client-credentials) grants",
+    "Lambda triggers",
+    "Custom domain with CloudFront/ACM"
+  ],
+  "frontendEnvAfterCreation": {
+    "VITE_API_URL": "(unchanged until API stage; still local/mock or empty)",
+    "VITE_COGNITO_AUTHORITY": "https://<prefix>.auth.ap-southeast-2.amazoncognito.com",
+    "VITE_COGNITO_CLIENT_ID": "<app-client-id>",
+    "VITE_REDIRECT_URI": "http://localhost:5173/callback",
+    "note": "Written to frontend/.env.local (git-ignored) only after IDs are verified."
+  }
+}

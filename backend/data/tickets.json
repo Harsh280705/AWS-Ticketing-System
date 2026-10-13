@@ -1,0 +1,63 @@
+[
+  {
+    "ticketId": "c153c299-cb15-4a20-ba0e-ba2ce61a56ac",
+    "id": "c153c299-cb15-4a20-ba0e-ba2ce61a56ac",
+    "title": "123456789",
+    "description": "1234567890",
+    "priority": "Medium",
+    "category": "Technical Issue",
+    "status": "Open",
+    "createdBy": "customer-b",
+    "createdByEmail": "customer-b@example.com",
+    "assignee": "Unassigned",
+    "attachmentKeys": [],
+    "attachments": [],
+    "createdAt": "2026-10-12T12:32:49.498Z",
+    "updatedAt": "2026-10-12T12:33:01.889Z",
+    "activity": [
+      {
+        "type": "CREATED",
+        "actorId": "customer-b",
+        "detail": "Ticket created",
+        "createdAt": "2026-10-12T12:32:49.498Z"
+      },
+      {
+        "type": "COMMENT_ADDED",
+        "actorId": "agent-1",
+        "detail": "New comment added",
+        "createdAt": "2026-10-12T12:33:01.889Z"
+      }
+    ],
+    "comments": [
+      {
+        "id": "cf1b6beb-5bf3-40c3-b787-20e1c9b4eda9",
+        "text": "Ohhh hiiiiii",
+        "authorId": "agent-1",
+        "authorRole": "Agent",
+        "createdAt": "2026-10-12T12:33:01.889Z"
+      }
+    ]
+  },
+  {
+    "id": "ccda0479-a046-43df-96bd-f497dace8ee9",
+    "title": "Payment issue",
+    "description": "Payment not processing",
+    "priority": "Medium",
+    "category": "Access & Accounts",
+    "status": "Open",
+    "createdBy": "local-demo-user",
+    "assignee": "Unassigned",
+    "attachmentKeys": [],
+    "createdAt": "2026-10-12T10:19:19.524Z",
+    "updatedAt": "2026-10-12T10:19:19.524Z",
+    "activity": [
+      {
+        "type": "CREATED",
+        "detail": "Ticket created",
+        "createdAt": "2026-10-12T10:19:19.524Z"
+      }
+    ],
+    "comments": [],
+    "attachments": []
+  }
+]

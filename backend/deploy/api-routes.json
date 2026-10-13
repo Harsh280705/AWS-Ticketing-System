@@ -1,0 +1,26 @@
+{
+  "comment": "Stage 6 HTTP API plan (NOT CREATED). $default stage, Lambda-proxy integrations, one JWT authorizer on all 7 business routes, open health, localhost CORS.",
+  "region": "ap-southeast-2",
+  "authorizer": {
+    "type": "JWT",
+    "issuer": "https://cognito-idp.ap-southeast-2.amazonaws.com/<USER_POOL_ID>",
+    "audience": ["<APP_CLIENT_ID>"]
+  },
+  "cors": {
+    "allowOrigins": ["http://localhost:5173"],
+    "allowMethods": ["GET", "POST", "PUT", "OPTIONS"],
+    "allowHeaders": ["authorization", "content-type"],
+    "maxAgeSec": 300
+  },
+  "routes": [
+    { "method": "POST", "path": "/tickets", "target": "tkt-createTicket", "auth": "JWT" },
+    { "method": "GET", "path": "/tickets", "target": "tkt-listTickets", "auth": "JWT" },
+    { "method": "GET", "path": "/tickets/{ticketId}", "target": "tkt-getTicket", "auth": "JWT" },
+    { "method": "PUT", "path": "/tickets/{ticketId}", "target": "tkt-updateTicket", "auth": "JWT" },
+    { "method": "POST", "path": "/tickets/{ticketId}/comments", "target": "tkt-addComment", "auth": "JWT" },
+    { "method": "GET", "path": "/tickets/{ticketId}/comments", "target": "tkt-listComments", "auth": "JWT" },
+    { "method": "POST", "path": "/tickets/presigned-url", "target": "tkt-presignedUrl", "auth": "JWT" },
+    { "method": "GET", "path": "/health", "target": null, "auth": "NONE", "note": "OMIT from the API: no tkt-* handler serves it (none needs to). Health stays local in server.js." }
+  ],
+  "invokePermission": "lambda:AddPermission per function, scoped SourceArn to this API's execution ARN (exact ARN at Stage 6)."
+}

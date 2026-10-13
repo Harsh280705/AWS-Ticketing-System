@@ -1,0 +1,24 @@
+{
+  "comment": "Stage 5 configuration (NOT APPLIED). Seven functions share one zip artifact; only Handler differs. Runtime nodejs22.x (plan Node 20 deprecated 2026-04-30). Region ap-southeast-2, account 517374107239, arch x86_64.",
+  "artifact": "backend/dist/ticketing-handlers.zip",
+  "artifactSha256": "0243253E6A9C90BDA721FEAAC23124BE5CEBD2E45D833E549990C098492AB34B",
+  "runtime": "nodejs22.x",
+  "architecture": "x86_64",
+  "memoryMb": 512,
+  "timeoutSec": 30,
+  "environment": {
+    "TABLE_NAME": "tkt-tickets",
+    "BUCKET_NAME": "<bucket-from-stage-4>",
+    "AWS_REGION": "ap-southeast-2",
+    "NOTE": "Exact deployment contract names; code also accepts TICKETS_TABLE/ATTACHMENTS_BUCKET aliases. Requires Stage 3 table + Stage 4 bucket approval before any deploy."
+  },
+  "functions": [
+    { "name": "tkt-createTicket", "handler": "src/handlers/createTicket.handler", "route": "POST /tickets" },
+    { "name": "tkt-listTickets", "handler": "src/handlers/listTickets.handler", "route": "GET /tickets" },
+    { "name": "tkt-getTicket", "handler": "src/handlers/getTicket.handler", "route": "GET /tickets/{ticketId}" },
+    { "name": "tkt-updateTicket", "handler": "src/handlers/updateTicket.handler", "route": "PUT /tickets/{ticketId}" },
+    { "name": "tkt-addComment", "handler": "src/handlers/addComment.handler", "route": "POST /tickets/{ticketId}/comments" },
+    { "name": "tkt-listComments", "handler": "src/handlers/listComments.handler", "route": "GET /tickets/{ticketId}/comments" },
+    { "name": "tkt-presignedUrl", "handler": "src/handlers/presignedUrl.handler", "route": "POST /tickets/presigned-url" }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "Variables": {
+    "TABLE_NAME": "tkt-tickets",
+    "BUCKET_NAME": "tkt-attachments-830118047383-ap-south-1"
+  }
+}

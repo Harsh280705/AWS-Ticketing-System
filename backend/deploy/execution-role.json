@@ -1,0 +1,43 @@
+{
+  "comment": "Stage 5 execution role (NOT CREATED). Scoped to the required tkt-tickets table only — deployed handlers never touch the legacy tables. S3 Put+Get on attachments/* (Get authorizes presigned downloads). No admin rights.",
+  "roleName": "tkt-lambda-execution-role",
+  "assumeRolePolicy": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": { "Service": "lambda.amazonaws.com" },
+        "Action": "sts:AssumeRole"
+      }
+    ]
+  },
+  "permissionsPolicy": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "DynamoRequiredTable",
+        "Effect": "Allow",
+        "Action": ["dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:Scan", "dynamodb:Query"],
+        "Resource": ["arn:aws:dynamodb:ap-southeast-2:517374107239:table/tkt-tickets"]
+      },
+      {
+        "Sid": "S3AttachmentsPutOnly",
+        "Effect": "Allow",
+        "Action": ["s3:PutObject"],
+        "Resource": ["arn:aws:s3:::<bucket-from-stage-4>/attachments/*"]
+      },
+      {
+        "Sid": "S3AttachmentsGetForPresignedDownloads",
+        "Effect": "Allow",
+        "Action": ["s3:GetObject"],
+        "Resource": ["arn:aws:s3:::<bucket-from-stage-4>/attachments/*"]
+      },
+      {
+        "Sid": "ScopedLogging",
+        "Effect": "Allow",
+        "Action": ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"],
+        "Resource": ["arn:aws:logs:ap-southeast-2:517374107239:log-group:/aws/lambda/tkt-*:*"]
+      }
+    ]
+  }
+}
