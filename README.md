@@ -55,13 +55,9 @@ cd ..\frontend
 npm test
 ```
 
-## Documentation
-
-See the [`docs/`](docs/) directory for architecture, local development, deployment guidance, and testing details.
-
 ## Deployment Status
 
-The application supports local development and includes AWS integration code. **Local tests do not guarantee that every AWS service or deployment workflow is working.** Refer to the deployment documentation for current status.
+The application supports local development and includes AWS integration code.
 
 ## Security
 
