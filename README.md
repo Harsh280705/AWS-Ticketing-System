@@ -2,7 +2,7 @@
 
 A help-desk ticketing application built with **Vue 3, Vite, Tailwind CSS, AWS Cognito, API Gateway, Lambda, DynamoDB, and S3**.
 
-**Live Demo:** [Open the Ticketing System](https://d3sty381dw5n6w.amplifyapp.com/)
+**Live Demo:** [Open the Ticketing System](https://main.d3sty381dw5n6w.amplifyapp.com/)
 
 ## Features
 
