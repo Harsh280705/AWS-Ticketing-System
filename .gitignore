@@ -78,3 +78,6 @@ jwt-authorizer.json
 # s3-cors-production.json
 # lambda-environment.json
 # tkt-runtime-policy.json
+
+# Generated ticket seed results
+seeded-tickets-*.json
